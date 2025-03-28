@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, url_for
 from markupsafe import escape
 
 app = Flask(__name__)
@@ -21,19 +21,27 @@ def check_member(id):
 
 
 
-@app.route("/<name>")
+@app.route("/<string:name>")
 def escape_test(name):
   return f"Hello, {escape(name)}"
 
 
 
 @app.route("/test/<path:testpath>") #<path: > converter accepts / unlike <string: >
-def test(testpath):
+def path_test(testpath):
   return f"{testpath}"
 
 
 
+with app.test_request_context():
+  print(url_for("index"))
+  print(url_for("hello_world", next="/"))
+  print(url_for("check_member", id=1))
+  print(url_for("escape_test", name="Kyle"))
+  print(url_for("path_test", testpath="this/is/test/path"))
+# url_for(method, params=value)
 
 
+  
 if __name__ == "__main__":
   app.run(debug=True)
