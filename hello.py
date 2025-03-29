@@ -1,12 +1,15 @@
-from flask import Flask, url_for
+from flask import Flask
 from markupsafe import escape
+
+from flask import request, render_template, redirect, url_for 
+
+
 
 app = Flask(__name__)
 
 @app.route("/")
-def index():
-  return "<p>This is the Index Page</p>"
-
+def index():  
+    return render_template("index.html")
 
 
 @app.route("/hello")
@@ -32,7 +35,7 @@ def path_test(testpath):
   return f"{testpath}"
 
 
-
+# Test 
 with app.test_request_context():
   print(url_for("index"))
   print(url_for("hello_world", next="/"))
@@ -42,6 +45,6 @@ with app.test_request_context():
 # url_for(method, params=value)
 
 
-  
+# Good practice
 if __name__ == "__main__":
   app.run(debug=True)
