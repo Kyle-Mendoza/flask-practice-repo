@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, url_for
 from constants import USERNAME, PASSWORD
 from markupsafe import Markup
 from flask import render_template_string
-
+from flask import abort
 app = Flask(__name__)
 
 @app.route("/")
@@ -40,6 +40,15 @@ def register():
 def test_markup():
     content = Markup("<strong>This string used markup</strong>")
     return render_template_string("<p>{{ content }}</p>", content=content)
+
+@app.route("/member_info")
+def member_info():
+    # abort(401) -> this will return error
+    return { "members": [
+        {'id':1,'name': 'kyle'},
+        {'id':2, 'name':'isaac'}
+        ]
+    }
 
 if __name__ == "__main__":
     app.run(debug=True)
